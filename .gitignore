@@ -50,6 +50,10 @@ build/
 [Bb]in/
 [Oo]bj/
 
+#Nuget stuffs
+Nuget/lib
+*.nupkg
+
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*

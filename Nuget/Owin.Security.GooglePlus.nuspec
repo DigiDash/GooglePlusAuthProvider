@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Owin.Security.GooglePlus</id>
+    <version>1.0.0</version>
+    <authors>Jerrie Pelser</authors>
+    <owners>Jerrie Pelser</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
+    <projectUrl>https://github.com/beabigrockstar/GooglePlusAuthProvider</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Google+ OAuth Owin Provider.</description>
+    <releaseNotes>Unitial Release</releaseNotes>
+    <copyright>Copyright 2013</copyright>
+    <tags>google+ google-plus owin aspnetmvc</tags>
+    <dependencies>
+      <dependency id="Microsoft.Owin.Security" version="2.0.1" />
+      <dependency id="Newtonsoft.Json" version="5.0.8" />
+    </dependencies>
+  </metadata>
+</package>
