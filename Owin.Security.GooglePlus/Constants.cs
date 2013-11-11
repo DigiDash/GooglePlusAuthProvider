@@ -1,4 +1,4 @@
-﻿namespace GooglePlusAuthenticationProvider
+﻿namespace Owin.Security.GooglePlus
 {
     internal static class Constants
     {

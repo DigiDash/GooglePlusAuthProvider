@@ -8,7 +8,7 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Provider;
 using Newtonsoft.Json.Linq;
 
-namespace GooglePlusAuthenticationProvider
+namespace Owin.Security.GooglePlus
 {
     /// <summary>
     /// Contains information about the login session as well as the user <see cref="System.Security.Claims.ClaimsIdentity"/>.
@@ -20,12 +20,14 @@ namespace GooglePlusAuthenticationProvider
         /// </summary>
         /// <param name="context">The OWIN environment</param>
         /// <param name="user">The JSON-serialized user</param>
+        /// <param name="person"></param>
         /// <param name="accessToken">Google+ Access token</param>
         /// <param name="expires">Seconds until expiration</param>
-        public GooglePlusAuthenticatedContext(IOwinContext context, JObject user, string accessToken, string expires)
+        public GooglePlusAuthenticatedContext(IOwinContext context, JObject user, JObject person, string accessToken, string expires)
             : base(context)
         {
             User = user;
+            Person = person;
             AccessToken = accessToken;
 
             int expiresValue;
@@ -34,17 +36,29 @@ namespace GooglePlusAuthenticationProvider
                 ExpiresIn = TimeSpan.FromSeconds(expiresValue);
             }
 
-            Id = TryGetValue(user, "id");
-            Name = TryGetValue(user, "name");
-            Link = TryGetValue(user, "link");
-            UserName = TryGetValue(user, "username");
+            Id = TryGetValue(person, "id");
+            Name = TryGetValue(person, "displayName");
+            Link = TryGetValue(person, "url");
+            UserName = TryGetValue(person, "displayName").Replace(" ", "");
             Email = TryGetValue(user, "email");
         }
 
         /// <summary>
         /// Gets the JSON-serialized user
         /// </summary>
+        /// <remarks>
+        /// Contains the Google user obtained from the endpoint https://www.googleapis.com/oauth2/v3/userinfo
+        /// </remarks>
         public JObject User { get; private set; }
+
+        /// <summary>
+        /// Gets the JSON-serialized person
+        /// </summary>
+        /// <remarks>
+        /// Contains the Google+ person obtained from the endpoint https://www.googleapis.com/plus/v1/people/me.  For more information
+        /// see https://developers.google.com/+/api/latest/people
+        /// </remarks>
+        public JObject Person { get; private set; }
 
         /// <summary>
         /// Gets the Facebook access token

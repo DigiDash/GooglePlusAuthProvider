@@ -7,8 +7,8 @@
     <ProjectGuid>{0EB3F36E-908D-4B44-85F4-CD6C47F798B8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GooglePlusAuthenticationProvider</RootNamespace>
-    <AssemblyName>GooglePlusAuthenticationProvider</AssemblyName>
+    <RootNamespace>Owin.Security.GooglePlus</RootNamespace>
+    <AssemblyName>Owin.Security.GooglePlus</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -272,6 +272,9 @@ namespace GooglePlusAuthProviderDemo.Controllers
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {
+                        await StoreAuthTokenClaims(user);
+
+                        // Sign in and redirect the user
                         await SignInAsync(user, isPersistent: false);
                         return RedirectToLocal(returnUrl);
                     }
@@ -283,6 +286,31 @@ namespace GooglePlusAuthProviderDemo.Controllers
             return View(model);
         }
 
+        private async Task StoreAuthTokenClaims(ApplicationUser user)
+        {
+            // Get the claims identity
+            ClaimsIdentity claimsIdentity =
+                await AuthenticationManager.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
+
+            if (claimsIdentity != null)
+            {
+                // Retrieve the existing claims
+                var currentClaims = await UserManager.GetClaimsAsync(user.Id);
+
+                // Get the list of access token related claims from the identity
+                var tokenClaims = claimsIdentity.Claims
+                    .Where(c => c.Type.StartsWith("urn:tokens:"));
+
+                // Save the access token related claims
+                foreach (var tokenClaim in tokenClaims)
+                {
+                    if (!currentClaims.Contains(tokenClaim))
+                    {
+                        await UserManager.AddClaimAsync(user.Id, tokenClaim);
+                    }
+                }
+            }
+        }
         //
         // POST: /Account/LogOff
         [HttpPost]

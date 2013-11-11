@@ -1,7 +1,6 @@
 ﻿using System;
-using Owin;
 
-namespace GooglePlusAuthenticationProvider
+namespace Owin.Security.GooglePlus
 {
     public static class GooglePlusAuthenticationExtensions
     {

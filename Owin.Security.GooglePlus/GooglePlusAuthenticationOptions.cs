@@ -4,7 +4,7 @@ using System.Net.Http;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 
-namespace GooglePlusAuthenticationProvider
+namespace Owin.Security.GooglePlus
 {
     public class GooglePlusAuthenticationOptions : AuthenticationOptions
     {

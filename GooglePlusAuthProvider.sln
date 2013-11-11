@@ -5,9 +5,9 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GooglePlusAuthProviderDemo", "GooglePlusAuthProviderDemo\GooglePlusAuthProviderDemo.csproj", "{00C542B1-4986-4C84-86A9-699F0969B55D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GooglePlusAuthenticationProvider", "GooglePlusAuthenticationProvider\GooglePlusAuthenticationProvider.csproj", "{0EB3F36E-908D-4B44-85F4-CD6C47F798B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Owin.Security.GooglePlus", "Owin.Security.GooglePlus\Owin.Security.GooglePlus.csproj", "{0EB3F36E-908D-4B44-85F4-CD6C47F798B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GooglePlusAuthenticationProvider.Tests", "GooglePlusAuthenticationProvider.Tests\GooglePlusAuthenticationProvider.Tests.csproj", "{57A98A6F-13D7-4B98-841D-7675D9A42D17}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Owin.Security.GooglePlus.Tests", "Owin.Security.GooglePlus.Tests\Owin.Security.GooglePlus.Tests.csproj", "{57A98A6F-13D7-4B98-841D-7675D9A42D17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

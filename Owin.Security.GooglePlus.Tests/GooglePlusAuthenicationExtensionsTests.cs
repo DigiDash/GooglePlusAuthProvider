@@ -2,9 +2,8 @@
 using FluentAssertions;
 using Microsoft.Owin.Builder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Owin;
 
-namespace GooglePlusAuthenticationProvider.Tests
+namespace Owin.Security.GooglePlus
 {
     [TestClass]
     public class GooglePlusAuthenicationExtensionsTests

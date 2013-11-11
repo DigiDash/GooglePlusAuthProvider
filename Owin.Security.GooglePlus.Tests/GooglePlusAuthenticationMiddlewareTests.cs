@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Owin;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
-using Owin;
 
-namespace GooglePlusAuthenticationProvider.Tests
+namespace Owin.Security.GooglePlus
 {
     [TestClass]
     public class GooglePlusAuthenticationMiddlewareTests

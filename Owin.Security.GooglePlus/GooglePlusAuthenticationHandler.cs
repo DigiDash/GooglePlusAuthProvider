@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.Owin;
-using Microsoft.Owin.Helpers;
 using Microsoft.Owin.Infrastructure;
 using Microsoft.Owin.Logging;
 using Microsoft.Owin.Security;
@@ -12,13 +11,14 @@ using Microsoft.Owin.Security.Infrastructure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace GooglePlusAuthenticationProvider
+namespace Owin.Security.GooglePlus
 {
     public class GooglePlusAuthenticationHandler : AuthenticationHandler<GooglePlusAuthenticationOptions>
     {
         private const string XmlSchemaString = "http://www.w3.org/2001/XMLSchema#string";
         private const string TokenEndpoint = "https://accounts.google.com/o/oauth2/token";
-        private const string UserInfoEndpoint = "https://www.googleapis.com/oauth2/v1/userinfo";
+        private const string UserInfoEndpoint = "https://www.googleapis.com/oauth2/v3/userinfo";
+        private const string GooglePlusUserEndpoint = "https://www.googleapis.com/plus/v1/people/me";
 
         private readonly ILogger logger;
         private readonly HttpClient httpClient;
@@ -65,6 +65,7 @@ namespace GooglePlusAuthenticationProvider
                 string requestPrefix = Request.Scheme + "://" + Request.Host;
                 string redirectUri = requestPrefix + Request.PathBase + Options.CallbackPath;
 
+                // Build up the body for the token request
                 var body = new List<KeyValuePair<string, string>>();
                 body.Add(new KeyValuePair<string, string>("grant_type", "authorization_code"));
                 body.Add(new KeyValuePair<string, string>("code", code));
@@ -72,42 +73,32 @@ namespace GooglePlusAuthenticationProvider
                 body.Add(new KeyValuePair<string, string>("client_id", Options.ClientId));
                 body.Add(new KeyValuePair<string, string>("client_secret", Options.ClientSecret));
 
+                // Request the token
                 HttpResponseMessage tokenResponse =
                     await httpClient.PostAsync(TokenEndpoint, new FormUrlEncodedContent(body));
                 tokenResponse.EnsureSuccessStatusCode();
                 string text = await tokenResponse.Content.ReadAsStringAsync();
 
-                /*
-                string tokenRequest = "grant_type=authorization_code" +
-                    "&code=" + Uri.EscapeDataString(code) +
-                    "&redirect_uri=" + Uri.EscapeDataString(redirectUri) +
-                    "&client_id=" + Uri.EscapeDataString(Options.ClientId) +
-                    "&client_secret=" + Uri.EscapeDataString(Options.ClientSecret);
-
-                HttpResponseMessage tokenResponse = await httpClient.GetAsync(TokenEndpoint + "?" + tokenRequest, Request.CallCancelled);
-                tokenResponse.EnsureSuccessStatusCode();
-                string text = await tokenResponse.Content.ReadAsStringAsync();
-                IFormCollection form = WebHelpers.ParseForm(text);
-                */
-
-
-                /*
-                IFormCollection form = WebHelpers.ParseForm(text);
-                string accessToken = form["access_token"];
-                string expires = form["expires"];
-                */
-
+                // Deserializes the token response
                 dynamic response = JsonConvert.DeserializeObject<dynamic>(text);
                 string accessToken = (string)response.access_token;
-                string expires = (string) response.expires;
+                string expires = (string) response.expires_in;
 
+                // Get the Google user
                 HttpResponseMessage graphResponse = await httpClient.GetAsync(
                     UserInfoEndpoint + "?access_token=" + Uri.EscapeDataString(accessToken), Request.CallCancelled);
                 graphResponse.EnsureSuccessStatusCode();
                 text = await graphResponse.Content.ReadAsStringAsync();
                 JObject user = JObject.Parse(text);
 
-                var context = new GooglePlusAuthenticatedContext(Context, user, accessToken, expires);
+                // Get the Google+ Person Info
+                graphResponse = await httpClient.GetAsync(
+                    GooglePlusUserEndpoint + "?access_token=" + Uri.EscapeDataString(accessToken), Request.CallCancelled);
+                graphResponse.EnsureSuccessStatusCode();
+                text = await graphResponse.Content.ReadAsStringAsync();
+                JObject person = JObject.Parse(text);
+
+                var context = new GooglePlusAuthenticatedContext(Context, user, person, accessToken, expires);
                 context.Identity = new ClaimsIdentity(
                     Options.AuthenticationType,
                     ClaimsIdentity.DefaultNameClaimType,
@@ -126,11 +117,11 @@ namespace GooglePlusAuthenticationProvider
                 }
                 if (!string.IsNullOrEmpty(context.Name))
                 {
-                    context.Identity.AddClaim(new Claim("urn:facebook:name", context.Name, XmlSchemaString, Options.AuthenticationType));
+                    context.Identity.AddClaim(new Claim("urn:googleplus:name", context.Name, XmlSchemaString, Options.AuthenticationType));
                 }
                 if (!string.IsNullOrEmpty(context.Link))
                 {
-                    context.Identity.AddClaim(new Claim("urn:facebook:link", context.Link, XmlSchemaString, Options.AuthenticationType));
+                    context.Identity.AddClaim(new Claim("urn:googleplus:url", context.Link, XmlSchemaString, Options.AuthenticationType));
                 }
                 context.Properties = properties;
 

@@ -94,6 +94,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -184,6 +185,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\zocial-regular-webfont.svg" />
+    <Content Include="Content\zocial.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -193,6 +196,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\zocial-regular-webfont.eot" />
+    <Content Include="Content\zocial-regular-webfont.ttf" />
+    <Content Include="Content\zocial-regular-webfont.woff" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
@@ -239,9 +245,9 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GooglePlusAuthenticationProvider\GooglePlusAuthenticationProvider.csproj">
-      <Project>{0EB3F36E-908D-4B44-85F4-CD6C47F798B8}</Project>
-      <Name>GooglePlusAuthenticationProvider</Name>
+    <ProjectReference Include="..\Owin.Security.GooglePlus\Owin.Security.GooglePlus.csproj">
+      <Project>{0eb3f36e-908d-4b44-85f4-cd6c47f798b8}</Project>
+      <Name>Owin.Security.GooglePlus</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

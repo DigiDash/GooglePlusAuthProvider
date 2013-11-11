@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Globalization;
 using System.Net.Http;
-using GooglePlusAuthenticationProvider.Properties;
 using Microsoft.Owin;
 using Microsoft.Owin.Logging;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.DataHandler;
 using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.Infrastructure;
-using Owin;
 
-namespace GooglePlusAuthenticationProvider
+namespace Owin.Security.GooglePlus
 {
     public class GooglePlusAuthenticationMiddleware : AuthenticationMiddleware<GooglePlusAuthenticationOptions>
     {
@@ -57,7 +55,7 @@ namespace GooglePlusAuthenticationProvider
         /// </summary>
         /// <returns>
         ///     An <see cref="T:Microsoft.Owin.Security.Infrastructure.AuthenticationHandler" /> configured with the
-        ///     <see cref="T:GooglePlusAuthenticationProvider.GooglePlusAuthenticationOptions" /> supplied to the constructor.
+        ///     <see cref="T:Owin.Security.GooglePlus.GooglePlusAuthenticationOptions" /> supplied to the constructor.
         /// </returns>
         protected override AuthenticationHandler<GooglePlusAuthenticationOptions> CreateHandler()
         {
