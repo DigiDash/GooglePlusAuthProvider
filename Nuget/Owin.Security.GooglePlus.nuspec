@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Owin.Security.GooglePlus</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <authors>Jerrie Pelser</authors>
     <owners>Jerrie Pelser</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseUrl>
@@ -15,6 +15,10 @@
     <dependencies>
       <dependency id="Microsoft.Owin.Security" version="2.0.1" />
       <dependency id="Newtonsoft.Json" version="5.0.8" />
+      <dependency id="Owin.Security.Providers" version="1.4.0" />
     </dependencies>
   </metadata>
+  <files>
+    <file src="..\readme.txt" target="" />
+  </files>
 </package>
